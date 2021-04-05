@@ -17,6 +17,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Type;
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 
 /** Model Analyzer takes necessary metadata from the MagicDraw model and puts it in 
@@ -130,9 +131,20 @@ public class ModelAnalyzer {
 		int lower = p.getLower();
 		int upper = p.getUpper();
 		
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), 
-				lower, upper);
-		return prop;		
+		//Added stereotype for persistent property
+		Stereotype persistent = StereotypesHelper.getAppliedStereotypeByString(p, "PersistentProperty");
+		
+//		if(persistent != null) {
+//			List<Property> tags = persistent.getOwnedAttribute();
+//			for(Property property : tags) {
+//				if(property.getNam)
+//			}
+//		}
+//		
+//		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), 
+//				lower, upper);
+//		return prop;		
+		return null;
 	}	
 	
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {

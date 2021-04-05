@@ -14,15 +14,18 @@ public class FMProperty extends FMElement  {
 	/** @ToDo: Add length, precision, unique... whatever is needed for ejb class generation
 	 * Also, provide these meta-attributes or tags in the modeling languange metaclass or 
 	 * stereotype */
-
+	private FMPerisistentProperty perisistentProperty;
+	private FMReferencedProperty referencedProperty;
 	
-	public FMProperty(String name, String type, String visibility, int lower, int upper) {
+	public FMProperty(String name, String type, String visibility, Integer lower, Integer upper,
+			FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty) {
 		super(name);
 		this.type = type;
 		this.visibility = visibility;
-		
 		this.lower = lower;
-		this.upper = upper;		
+		this.upper = upper;
+		this.perisistentProperty = perisistentProperty;
+		this.referencedProperty = referencedProperty;
 	}
 	
 	public String getType() {
@@ -53,4 +56,24 @@ public class FMProperty extends FMElement  {
 	public void setUpper(Integer upper) {
 		this.upper = upper;
 	}
+
+	public FMPerisistentProperty getPerisistentProperty() {
+		return perisistentProperty;
+	}
+
+	public void setPerisistentProperty(FMPerisistentProperty perisistentProperty) {
+		this.perisistentProperty = perisistentProperty;
+	}
+
+	public FMReferencedProperty getReferencedProperty() {
+		return referencedProperty;
+	}
+
+	public void setReferencedProperty(FMReferencedProperty referencedProperty) {
+		this.referencedProperty = referencedProperty;
+	}
+	
+	
+	
+	
 }
