@@ -3,20 +3,18 @@ package myplugin.generator.fmmodel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FMPerisistentProperty extends FMProperty {
+public class FMPerisistentProperty {
 	private String columnName;
 	private Integer length;
 	private Integer precision;
-	private List<FMEnumeration> enumerationList = new ArrayList<FMEnumeration>();
+	private Strategy strategy;
 
-	public FMPerisistentProperty(String name, String type, String visibility, Integer lower, Integer upper,
-			FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty, String columnName,
-			Integer length, Integer precision, List<FMEnumeration> enumerationList) {
-		super(name, type, visibility, lower, upper, perisistentProperty, referencedProperty);
+	public FMPerisistentProperty(String columnName, Integer length, Integer precision, Strategy strategy) {
+		super();
 		this.columnName = columnName;
 		this.length = length;
 		this.precision = precision;
-		this.enumerationList = enumerationList;
+		this.strategy = strategy;
 	}
 
 	public String getColumnName() {
@@ -43,11 +41,12 @@ public class FMPerisistentProperty extends FMProperty {
 		this.precision = precision;
 	}
 
-	public List<FMEnumeration> getEnumerationList() {
-		return enumerationList;
+	public Strategy getStrategy() {
+		return strategy;
 	}
 
-	public void setEnumerationList(List<FMEnumeration> enumerationList) {
-		this.enumerationList = enumerationList;
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
 	}
+
 }

@@ -18,7 +18,6 @@ public class FMClass extends FMType {
 	
 	/** @ToDo: add list of methods */
 	
-	
 	public FMClass(String name, String classPackage, String visibility) {
 		super(name, classPackage);		
 		this.visibility = visibility;
