@@ -80,8 +80,29 @@ public class FMClass{
 
 	public void setVisibility(String visibility) {
 		this.visibility = visibility;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getTypePackage() {
+		return typePackage;
+	}
+
+
+	public void setTypePackage(String typePackage) {
+		this.typePackage = typePackage;
 	}	
 
+	
 	
 	
 }
