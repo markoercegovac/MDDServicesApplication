@@ -62,14 +62,15 @@ class GenerateAction extends MDAction{
 			JFileChooser jfc = new JFileChooser();
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 				String fileName = jfc.getSelectedFile().getAbsolutePath();
-			
+				
+				FMModel model = FMModel.getInstance();
+				
 				XStream xstream = new XStream(new DomDriver());
 				BufferedWriter out;		
 				try {
 					out = new BufferedWriter(new OutputStreamWriter(
 							new FileOutputStream(fileName), "UTF8"));					
-					xstream.toXML(FMModel.getInstance().getClasses(), out);
-					xstream.toXML(FMModel.getInstance().getEnumerations(), out);
+					xstream.toXML(model, out);
 					
 				} catch (UnsupportedEncodingException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());				

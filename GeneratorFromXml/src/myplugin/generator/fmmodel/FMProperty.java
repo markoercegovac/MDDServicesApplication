@@ -1,7 +1,7 @@
 package myplugin.generator.fmmodel;
 
 
-public class FMProperty extends FMElement  {
+public class FMProperty {
 	//Property type
 	private String type;
 	// Property visibility (public, private, protected, package)
@@ -11,23 +11,33 @@ public class FMProperty extends FMElement  {
 	//Multiplicity (upper value) 
 	private Integer upper;
 	
+	private String name;
+	private String classPackage;
+	private String typePackage;
+	
 	/** @ToDo: Add length, precision, unique... whatever is needed for ejb class generation
 	 * Also, provide these meta-attributes or tags in the modeling languange metaclass or 
 	 * stereotype */
 	private FMPerisistentProperty perisistentProperty;
 	private FMReferencedProperty referencedProperty;
 	
-	public FMProperty(String name, String type, String visibility, Integer lower, Integer upper,
-			FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty) {
-		super(name);
+	
+	public FMProperty() {
+		super();
+	}
+	public FMProperty(String type, String visibility, Integer lower, Integer upper, String name, String classPackage,
+			String typePackage, FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty) {
+		super();
 		this.type = type;
 		this.visibility = visibility;
 		this.lower = lower;
 		this.upper = upper;
+		this.name = name;
+		this.classPackage = classPackage;
+		this.typePackage = typePackage;
 		this.perisistentProperty = perisistentProperty;
 		this.referencedProperty = referencedProperty;
 	}
-	
 	public String getType() {
 		return type;
 	}

@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class FMClass extends FMType {	
+public class FMClass{	
 	
 	private String visibility;
-	
+	private String name;
+	private String classPackage;
+	private String typePackage;
 
 	//Class properties
 	private List<FMProperty> FMProperties = new ArrayList<FMProperty>();
@@ -18,15 +20,32 @@ public class FMClass extends FMType {
 	
 	/** @ToDo: add list of methods */
 	
-	public FMClass(String name, String classPackage, String visibility) {
-		super(name, classPackage);		
-		this.visibility = visibility;
-	}	
 	
+	
+	
+
 	public List<FMProperty> getProperties(){
 		return FMProperties;
 	}
-	
+
+
+	public FMClass() {
+		super();
+	}
+
+
+	public FMClass(String visibility, String name, String classPackage, String typePackage,
+			List<FMProperty> fMProperties, List<String> importedPackages) {
+		super();
+		this.visibility = visibility;
+		this.name = name;
+		this.classPackage = classPackage;
+		this.typePackage = typePackage;
+		FMProperties = fMProperties;
+		this.importedPackages = importedPackages;
+	}
+
+
 	public Iterator<FMProperty> getPropertyIterator(){
 		return FMProperties.iterator();
 	}

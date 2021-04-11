@@ -1,8 +1,10 @@
 package ${class.typePackage};
 
+@Entity
+@Table(name = "${class.name}")
 ${class.visibility} class ${class.name} {  
 <#list properties as property>
-	<#if property.upper == 1 >   
+	<#if property.upper == 1 >
       ${property.visibility} ${property.type} ${property.name};
     <#elseif property.upper == -1 > 
       ${property.visibility} Set<${property.type}> ${property.name} = new HashSet<${property.type}>();

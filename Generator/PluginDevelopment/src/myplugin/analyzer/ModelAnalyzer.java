@@ -3,20 +3,24 @@ package myplugin.analyzer;
 import java.util.Iterator;
 import java.util.List;
 
+import myplugin.generator.fmmodel.CascadeType;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMPerisistentProperty;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
+import myplugin.generator.fmmodel.FetchType;
+import myplugin.generator.fmmodel.Strategy;
 
+import com.nomagic.magicdraw.uml.symbols.reflect.PersistentProperty;
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Type;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.*;
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
+import com.sun.xml.internal.ws.server.sei.ValueGetter;
 
 
 /** Model Analyzer takes necessary metadata from the MagicDraw model and puts it in 
@@ -130,9 +134,19 @@ public class ModelAnalyzer {
 		int lower = p.getLower();
 		int upper = p.getUpper();
 		
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), 
-				lower, upper);
-		return prop;		
+		//Added stereotype for persistent property
+		FMReferencedProperty referencedProperty = null;
+		FMPerisistentProperty persistentProperty = null;
+		
+		if(p.getOpposite() != null) {
+			referencedProperty = getReferecedProperty(p, cl);
+		}
+		else {
+			persistentProperty = getPersistentProperty(p, cl, "PersistentProperty");	
+		}
+		
+		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), lower, upper, persistentProperty, referencedProperty);
+		return prop;
 	}	
 	
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {
@@ -148,5 +162,98 @@ public class ModelAnalyzer {
 		return fmEnum;
 	}	
 	
+	private FMPerisistentProperty getPersistentProperty(Property p, Class c, String stereotypeName) {
+		Stereotype persistent = StereotypesHelper.getAppliedStereotypeByString(p, stereotypeName);
+		String columnName = null;
+		Integer length = 0;
+		Integer precision = 0;
+		String strategy = null;
+		Strategy strategyEnum = null;
+		
+		if(persistent != null) {
+			List<Property> tags = persistent.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName  = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(p, persistent, tagName);
+				if(value.size() > 0) {
+					switch (tagName) {
+						case "columnName":
+							columnName = (String) value.get(0);
+							break;
+						case "precision":
+							precision = (Integer) value.get(0);
+							break;
+						case "length":
+							length = (Integer) value.get(0);
+							break;
+						case "strategy":
+							strategy = ((EnumerationLiteral) value.get(0)).getName();
+							break;
+					}
+				}		
+			}
+		}
+		if(strategy != null) {
+			strategyEnum = Strategy.valueOf(strategy.toUpperCase());
+		}
+		FMPerisistentProperty fmPersistentProperty = new FMPerisistentProperty(columnName, length, precision, strategyEnum);
+		return fmPersistentProperty;
+	}
+	
+	private FMReferencedProperty getReferecedProperty(Property p, Class c) {
+		Stereotype oneToMany = StereotypesHelper.getAppliedStereotypeByString(p, "OneToMany");
+		Stereotype manyToOne = StereotypesHelper.getAppliedStereotypeByString(p, "ManyToOne");
+		Stereotype referenced = StereotypesHelper.getAppliedStereotypeByString(p, "ReferencedProperty");
+		Stereotype referencedStereotype = null;
+		String fetch = null;
+		FetchType fetchEnum = null;
+		String cascade = null;
+		CascadeType cascadeEnum = null;
+		String columnName = null;
+		String joinType = null;
+		
+		if(oneToMany != null) {
+			referencedStereotype = oneToMany;
+			joinType = "OneToMany";
+		}
+		if(manyToOne != null) {
+			referencedStereotype = manyToOne;
+			joinType = "ManyToOne";
+		}
+		
+		if(referencedStereotype!=null) {
+			List<Property> tags = referencedStereotype.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(p, referencedStereotype, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "columnName":
+							columnName = (String) value.get(0);
+							break;
+						case "cascade":
+							cascade = ((EnumerationLiteral)value.get(0)).getName();
+							break;
+					}
+				}
+			}
+			if(referenced != null) {
+				fetch = referenced.getOwnedAttribute().get(0).getName();	
+			}
+			
+		}
+		
+		if(fetch != null) {
+			fetchEnum = FetchType.valueOf(fetch.toUpperCase());
+		}
+		if(cascade != null) {
+			cascadeEnum = CascadeType.valueOf(cascade.toUpperCase());
+		}
+		
+		FMReferencedProperty fmReferencedProperty = new FMReferencedProperty(columnName, null, joinType, cascadeEnum, fetchEnum);
+		return fmReferencedProperty;
+	}
+	
+
 	
 }
