@@ -13,6 +13,25 @@ public class FMProperty {
 	
 	private String name;
 	private String classPackage;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getClassPackage() {
+		return classPackage;
+	}
+	public void setClassPackage(String classPackage) {
+		this.classPackage = classPackage;
+	}
+	public String getTypePackage() {
+		return typePackage;
+	}
+	public void setTypePackage(String typePackage) {
+		this.typePackage = typePackage;
+	}
+
 	private String typePackage;
 	
 	/** @ToDo: Add length, precision, unique... whatever is needed for ejb class generation
