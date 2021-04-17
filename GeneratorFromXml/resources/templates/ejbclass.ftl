@@ -1,6 +1,6 @@
 package ${class.typePackage};
 
-@Entity
+@Entityjpook
 @Table(name = "${class.name}")
 ${class.visibility} class ${class.name} {  
 <#list properties as property>
