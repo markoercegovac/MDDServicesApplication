@@ -21,6 +21,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import myplugin.generator.EJBGenerator;
+import myplugin.generator.FrontGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
@@ -31,7 +32,8 @@ import myplugin.generator.options.ProjectOptions;
 
 public class MainLoadFromXml{
 	
-	private static final String DIR = "c:/fax/temp";
+	private static String DIR = "c:/fax/temp";
+
 	private static final String TEMP_DIR = "templates";
 	private static final String PROJECT_PATH = new File("").getAbsolutePath();
 	
@@ -47,19 +49,49 @@ public class MainLoadFromXml{
 			XStream xstream = new XStream(new DomDriver());
 			FMModel model= (FMModel) xstream.fromXML(in);
 			FMModel.getInstance().getClasses().addAll(model.getClasses());
+			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
 			
 			ejbOptions();
-			
+			angularHtmlComponents();
+			angularCssComponents();
+			angularTsComponents();
 		}
 	   
 	}
 	
 	public static void ejbOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions(DIR , "ejbclass", TEMP_DIR,"{0}EJBModel.java",true,"generator.mbrs.model");
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "ejbclass", TEMP_DIR,"{0}EJBModel.java",true,"generator.mbrs.model");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
 		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
         EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
         ejbGenerator.generate();
+	}
+	
+	public static void angularHtmlComponents() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR,"htmlComponent", TEMP_DIR,"{0}".toLowerCase()+".component.html",true,
+				"FrontEnd.app.components");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("FrontGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        FrontGenerator ejbGenerator = new FrontGenerator(generatorOptions);
+        ejbGenerator.generate();		
+	}
+	
+	public static void angularCssComponents() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR,"cssComponent", TEMP_DIR,"{0}".toLowerCase()+".component.css",true,
+				"FrontEnd.app.components");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("FrontGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        FrontGenerator ejbGenerator = new FrontGenerator(generatorOptions);
+        ejbGenerator.generate();		
+	}
+	
+	public static void angularTsComponents() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR,"tsComponent", TEMP_DIR,"{0}".toLowerCase()+".component.ts",true,
+				"FrontEnd.app.components");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("FrontGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        FrontGenerator ejbGenerator = new FrontGenerator(generatorOptions);
+        ejbGenerator.generate();		
 	}
 
 }

@@ -2,32 +2,28 @@ package myplugin.generator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import b.a.f.c;
 import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMFieldProperty;
+import myplugin.generator.fmmodel.FMFormClass;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.options.GeneratorOptions;
 
-/**
- * EJB generator that now generates incomplete ejb classes based on MagicDraw
- * class model
- * 
- * @ToDo: enhance resources/templates/ejbclass.ftl template and intermediate
- *        data structure (@see myplugin.generator.fmmodel) in order to generate
- *        complete ejb classes
- */
+public class FrontGenerator extends BasicGenerator {
 
-public class EJBGenerator extends BasicGenerator {
-
-	public EJBGenerator(GeneratorOptions generatorOptions) {
+	public FrontGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
+		// TODO Auto-generated constructor stub
 	}
-
 	public void generate() {
 
 		try {
@@ -42,12 +38,25 @@ public class EJBGenerator extends BasicGenerator {
 			Writer out;
 			Map<String, Object> context = new HashMap<String, Object>();
 			try {
-				out = getWriter(cl.getName(), cl.getTypePackage(), false);
+				FMFormClass fm = cl.getFmFormClass();
+				String path = "FrontEnd.src.app.";
+				if(fm.getComponentName()!=null) {
+					path += fm.getComponentName().toLowerCase();
+				}
+				out = getWriter(cl.getName(), path, true);
 				if (out != null) {
 					context.clear();
 					context.put("class", cl);
 					context.put("properties", cl.getProperties());
+					context.put("fmForm",cl.getFmFormClass());
 					context.put("importedPackages", cl.getImportedPackages());
+					List<FMFieldProperty> fmFields = new ArrayList<>();
+					for(FMProperty prop:cl.getProperties()) {
+						fmFields.add(prop.getFieldProperty());
+					}
+					
+					context.put("listFields",fmFields);
+					
 					getTemplate().process(context, out);
 					out.flush();
 				}
@@ -58,4 +67,6 @@ public class EJBGenerator extends BasicGenerator {
 			}
 		}
 	}
+	
+
 }
