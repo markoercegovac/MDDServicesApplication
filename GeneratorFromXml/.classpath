@@ -152,7 +152,7 @@
 	<classpathentry kind="lib" path="C:/Program Files/MagicDraw UML/lib/webservice/rsclient.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/MagicDraw UML/lib/webservice/saaj.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/MagicDraw UML/lib/webservice/wsdl4j-1.5.1.jar"/>
-	<classpathentry kind="lib" path="F:/fax/mas/Mbrs/Gen/MDDServicesApplication/Generator/PluginDevelopment/lib/freemarker.jar"/>
-	<classpathentry kind="lib" path="F:/fax/mas/Mbrs/Gen/MDDServicesApplication/Generator/PluginDevelopment/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/fax/master/1. semestar/Metodologije brzog razvoja softvera/Projekat/MDDServicesApplication/Generator/PluginDevelopment/lib/freemarker.jar"/>
+	<classpathentry kind="lib" path="C:/fax/master/1. semestar/Metodologije brzog razvoja softvera/Projekat/MDDServicesApplication/Generator/PluginDevelopment/lib/xstream-1.3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

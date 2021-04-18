@@ -39,13 +39,21 @@ public class FMProperty {
 	 * stereotype */
 	private FMPerisistentProperty perisistentProperty;
 	private FMReferencedProperty referencedProperty;
-	
+	private FMFieldProperty fieldProperty;
 	
 	public FMProperty() {
 		super();
 	}
+	
+	public FMFieldProperty getFieldProperty() {
+		return fieldProperty;
+	}
+	public void setFieldProperty(FMFieldProperty fieldProperty) {
+		this.fieldProperty = fieldProperty;
+	}
 	public FMProperty(String type, String visibility, Integer lower, Integer upper, String name, String classPackage,
-			String typePackage, FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty) {
+			String typePackage, FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty,
+			FMFieldProperty fieldProperty) {
 		super();
 		this.type = type;
 		this.visibility = visibility;
@@ -56,6 +64,7 @@ public class FMProperty {
 		this.typePackage = typePackage;
 		this.perisistentProperty = perisistentProperty;
 		this.referencedProperty = referencedProperty;
+		this.fieldProperty = fieldProperty;
 	}
 	public String getType() {
 		return type;

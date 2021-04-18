@@ -15,6 +15,7 @@ public class FMFormClass {
 	private String componentPath;
 	private String stereotype;
 	
+	
 
 	public String getStereotype() {
 		return stereotype;

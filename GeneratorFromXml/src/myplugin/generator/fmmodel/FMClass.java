@@ -21,7 +21,7 @@ public class FMClass{
 	/** @ToDo: add list of methods */
 	
 	
-	
+	private FMFormClass fmFormClass;
 	
 
 	public List<FMProperty> getProperties(){
@@ -35,7 +35,7 @@ public class FMClass{
 
 
 	public FMClass(String visibility, String name, String classPackage, String typePackage,
-			List<FMProperty> fMProperties, List<String> importedPackages) {
+			List<FMProperty> fMProperties, List<String> importedPackages,FMFormClass formClass) {
 		super();
 		this.visibility = visibility;
 		this.name = name;
@@ -43,6 +43,17 @@ public class FMClass{
 		this.typePackage = typePackage;
 		FMProperties = fMProperties;
 		this.importedPackages = importedPackages;
+		this.fmFormClass = formClass;
+	}
+
+
+	public FMFormClass getFmFormClass() {
+		return fmFormClass;
+	}
+
+
+	public void setFmFormClass(FMFormClass fmFormClass) {
+		this.fmFormClass = fmFormClass;
 	}
 
 

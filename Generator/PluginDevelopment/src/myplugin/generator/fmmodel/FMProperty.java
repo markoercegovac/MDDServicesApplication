@@ -16,9 +16,13 @@ public class FMProperty extends FMElement  {
 	 * stereotype */
 	private FMPerisistentProperty perisistentProperty;
 	private FMReferencedProperty referencedProperty;
+	private FMFieldProperty fieldProperty;
+	
+	
 	
 	public FMProperty(String name, String type, String visibility, Integer lower, Integer upper,
-			FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty) {
+			FMPerisistentProperty perisistentProperty, FMReferencedProperty referencedProperty,
+			FMFieldProperty fieldProperty) {
 		super(name);
 		this.type = type;
 		this.visibility = visibility;
@@ -26,8 +30,8 @@ public class FMProperty extends FMElement  {
 		this.upper = upper;
 		this.perisistentProperty = perisistentProperty;
 		this.referencedProperty = referencedProperty;
+		this.fieldProperty = fieldProperty;
 	}
-	
 	public String getType() {
 		return type;
 	}
@@ -71,6 +75,12 @@ public class FMProperty extends FMElement  {
 
 	public void setReferencedProperty(FMReferencedProperty referencedProperty) {
 		this.referencedProperty = referencedProperty;
+	}
+	public FMFieldProperty getFieldProperty() {
+		return fieldProperty;
+	}
+	public void setFieldProperty(FMFieldProperty fieldProperty) {
+		this.fieldProperty = fieldProperty;
 	}
 	
 	
