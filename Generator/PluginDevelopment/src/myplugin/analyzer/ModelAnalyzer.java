@@ -6,11 +6,14 @@ import java.util.List;
 import myplugin.generator.fmmodel.CascadeType;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEnumeration;
+import myplugin.generator.fmmodel.FMFieldProperty;
+import myplugin.generator.fmmodel.FMFormClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMPerisistentProperty;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.fmmodel.FetchType;
+import myplugin.generator.fmmodel.FieldType;
 import myplugin.generator.fmmodel.Strategy;
 
 import com.nomagic.magicdraw.uml.symbols.reflect.PersistentProperty;
@@ -103,7 +106,9 @@ public class ModelAnalyzer {
 		if (cl.getName() == null) 
 			throw new AnalyzeException("Classes must have names!");
 		
-		FMClass fmClass = new FMClass(cl.getName(), packageName, cl.getVisibility().toString());
+		FMFormClass fc = getClassForm(cl);
+		
+		FMClass fmClass = new FMClass(cl.getName(), packageName, cl.getVisibility().toString(),fc);
 		Iterator<Property> it = ModelHelper.attributes(cl);
 		while (it.hasNext()) {
 			Property p = it.next();
@@ -137,15 +142,19 @@ public class ModelAnalyzer {
 		//Added stereotype for persistent property
 		FMReferencedProperty referencedProperty = null;
 		FMPerisistentProperty persistentProperty = null;
+		FMFieldProperty fieldProperty = null;
 		
 		if(p.getOpposite() != null) {
 			referencedProperty = getReferecedProperty(p, cl);
+			
 		}
 		else {
-			persistentProperty = getPersistentProperty(p, cl, "PersistentProperty");	
+			persistentProperty = getPersistentProperty(p, cl, "PersistentProperty");
+			fieldProperty = getFieldProperty(p, cl);
 		}
 		
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), lower, upper, persistentProperty, referencedProperty);
+		
+		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), lower, upper, persistentProperty, referencedProperty,fieldProperty);
 		return prop;
 	}	
 	
@@ -254,6 +263,187 @@ public class ModelAnalyzer {
 		return fmReferencedProperty;
 	}
 	
+	private FMFieldProperty getFieldProperty(Property p, Class c) {
+		Stereotype calculated = StereotypesHelper.getAppliedStereotypeByString(p, "Calculated");
+		Stereotype validated = StereotypesHelper.getAppliedStereotypeByString(p, "Validated");
+		Stereotype field = StereotypesHelper.getAppliedStereotypeByString(p, "Field");
+		Stereotype referencedStereotype = null;
+
+	
+		
+		
+		String fieldType = null;
+		FieldType fieldTypeEnum = null;
+		String label = null;
+		boolean multiple = false;
+		boolean required = false;
+		String stereotype = null;
+		
+		if(calculated != null) {
+			stereotype = "Calculated";
+			referencedStereotype = calculated;
+		}
+		
+		if(validated != null) {
+			stereotype = "Validated";
+			referencedStereotype = validated;
+		}
+		
+		
+		if(referencedStereotype!=null) {
+			List<Property> tags = referencedStereotype.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(p, referencedStereotype, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "required":
+							required = (boolean) value.get(0);
+							break;
+					}
+				}
+			}	
+		}
+		
+		if(field != null) {
+			List<Property> tags = field.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(p, field, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "label":
+							label = (String) value.get(0);
+							break;
+						
+						case "type":
+							fieldType = ((EnumerationLiteral) value.get(0)).getName();
+							break;
+						
+						case "multiple":
+							multiple = (boolean) value.get(0);
+							break;
+					}
+				}		
+			}
+		}
+
+		
+		if(fieldType!=null) {
+			fieldTypeEnum = FieldType.valueOf(fieldType.toUpperCase());
+		}
+		FMFieldProperty fmFieldProperty = new FMFieldProperty(label, fieldTypeEnum, multiple, required,stereotype);
+		return fmFieldProperty;
+	}
+	
+	private FMFormClass getClassForm(Class c) {
+		Stereotype form = StereotypesHelper.getAppliedStereotypeByString(c, "Form");
+		Stereotype table = StereotypesHelper.getAppliedStereotypeByString(c, "Table");
+		Stereotype component = StereotypesHelper.getAppliedStereotypeByString(c, "Component");
+		Stereotype standard = StereotypesHelper.getAppliedStereotypeByString(c, "Standard");
+		
+		Stereotype referencedStereotype = null;
+		
+		String title = null;
+		String name = null;
+		boolean modal = false;
+		String componentName = null;
+		String componentPath = null;
+		boolean getAll = false;
+		boolean input = true;
+		boolean edit = true;
+		boolean delete = true;
+		String redirectLink = null;
+		String successMessage = null;
+		String errorMessage = null;
+		String stereotype = null;
+		
+		if(table != null) {
+			referencedStereotype = table;
+			stereotype  = "Table";
+		}
+		
+		if(component != null) {
+			referencedStereotype = standard;
+			stereotype = "Standard";
+		}
+		
+		if(referencedStereotype != null) {
+			List<Property> tags = referencedStereotype.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(c, referencedStereotype, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "input":
+							input = (boolean) value.get(0);
+							break;
+						case "edit":
+							edit = (boolean) value.get(0);
+							break;
+						case "delete":
+							delete = (boolean) value.get(0);
+							break;
+						case "redirectLink":
+							redirectLink= (String) value.get(0);
+							break;
+						case "successMessage":
+							successMessage = (String) value.get(0);
+							break;
+						case "errorMessage":
+							errorMessage = (String) value.get(0);
+							break;
+						case "getAll":
+							getAll = (boolean) value.get(0);
+					}
+				}
+			}
+			
+		}
+		
+		if(form != null) {
+			List<Property> tags = form.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(c, form, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "title":
+							title = (String) value.get(0);
+							break;
+						case "modal":
+							modal = (boolean) value.get(0);
+							break;
+						case "name":
+							name = (String) value.get(0);
+							break;
+					}
+				}
+			}
+		}
+		
+		if(component != null) {
+			List<Property> tags = component.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(c, component, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "name":
+							componentName = (String) value.get(0);
+							break;
+						case "path":
+							componentPath = (String) value.get(0);
+							break;		
+					}
+				}
+			}
+		}
+		
+		FMFormClass formClass = new FMFormClass(title, name, modal, getAll, input, edit, redirectLink, successMessage, errorMessage, componentName, componentPath,stereotype);
+		
+		return formClass;
+	}
 
 	
 }

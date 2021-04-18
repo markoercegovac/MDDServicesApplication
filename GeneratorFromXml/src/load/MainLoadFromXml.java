@@ -31,13 +31,14 @@ import myplugin.generator.options.ProjectOptions;
 
 public class MainLoadFromXml{
 	
-	private static final String DIR = "c:/temp";
+	private static final String DIR = "c:/fax/temp";
 	private static final String TEMP_DIR = "templates";
+	private static final String PROJECT_PATH = new File("").getAbsolutePath();
 	
 
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		System.out.println("Start");
+
 		
 		JFileChooser jfc = new JFileChooser();
 		if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -56,7 +57,7 @@ public class MainLoadFromXml{
 	public static void ejbOptions() {
 		GeneratorOptions generatorOptions = new GeneratorOptions(DIR , "ejbclass", TEMP_DIR,"{0}EJBModel.java",true,"generator.mbrs.model");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
-		generatorOptions.setTemplateDir("F:\\fax\\mas\\Mbrs\\Gen\\MDDServicesApplication\\GeneratorFromXml\\resources\\templates");
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
         EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
         ejbGenerator.generate();
 	}

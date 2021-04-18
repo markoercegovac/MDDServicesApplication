@@ -18,11 +18,23 @@ public class FMClass extends FMType {
 	
 	/** @ToDo: add list of methods */
 	
-	public FMClass(String name, String classPackage, String visibility) {
+	private FMFormClass fmFormClass;
+
+	
+	public FMClass(String name, String classPackage, String visibility, FMFormClass formClass) {
 		super(name, classPackage);		
+		this.fmFormClass = formClass;
 		this.visibility = visibility;
 	}	
 	
+	public FMFormClass getFmFormClass() {
+		return fmFormClass;
+	}
+
+	public void setFmFormClass(FMFormClass fmFormClass) {
+		this.fmFormClass = fmFormClass;
+	}
+
 	public List<FMProperty> getProperties(){
 		return FMProperties;
 	}
