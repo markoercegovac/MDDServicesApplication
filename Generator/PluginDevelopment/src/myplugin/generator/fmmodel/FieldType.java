@@ -4,7 +4,8 @@ public enum FieldType {
 	FILE,
 	TEXT,
 	SELECT,
-	DATETIME,
+	DATE,
 	TEXTAREA,
+	TIME,
 	CHECKBOX;
 }

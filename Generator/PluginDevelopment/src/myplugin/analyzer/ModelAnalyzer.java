@@ -76,7 +76,10 @@ public class ModelAnalyzer {
 				if (ownedElement instanceof Class) {
 					Class cl = (Class)ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
-					FMModel.getInstance().getClasses().add(fmClass);
+					if(!fmClass.getName().equalsIgnoreCase("BusinessApp")) {
+						FMModel.getInstance().getClasses().add(fmClass);	
+					}
+					
 				}
 				
 				if (ownedElement instanceof Enumeration) {

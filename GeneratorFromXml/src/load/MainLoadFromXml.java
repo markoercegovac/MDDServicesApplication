@@ -22,6 +22,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.FrontGenerator;
+import myplugin.generator.FrontModelGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
@@ -49,12 +50,14 @@ public class MainLoadFromXml{
 			XStream xstream = new XStream(new DomDriver());
 			FMModel model= (FMModel) xstream.fromXML(in);
 			FMModel.getInstance().getClasses().addAll(model.getClasses());
-			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
+//			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
 			
 			ejbOptions();
 			angularHtmlComponents();
 			angularCssComponents();
 			angularTsComponents();
+			angularTsModel();
+			angularTsService();
 		}
 	   
 	}
@@ -93,5 +96,22 @@ public class MainLoadFromXml{
         FrontGenerator ejbGenerator = new FrontGenerator(generatorOptions);
         ejbGenerator.generate();		
 	}
-
+	
+	public static void angularTsModel() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR,"frontModel", TEMP_DIR,"{0}".toLowerCase()+".model.ts",true,
+				"FrontEnd.src.app.model");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("FrontModelGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        FrontModelGenerator ejbGenerator = new FrontModelGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
+	
+	public static void angularTsService() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR,"frontService", TEMP_DIR,"{0}".toLowerCase()+".service.ts",true,
+				"FrontEnd.src.app.service");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("FrontModelGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        FrontModelGenerator ejbGenerator = new FrontModelGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
 }

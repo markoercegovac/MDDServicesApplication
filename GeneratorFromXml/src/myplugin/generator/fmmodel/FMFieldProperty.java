@@ -7,19 +7,34 @@ public class FMFieldProperty {
 	private boolean multiple;
 	private boolean required;
 	private String stereotype;
+	private String name;
 	
 	public FMFieldProperty() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FMFieldProperty(String label, FieldType type, boolean multiple, boolean required, String stereotype) {
+	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public FMFieldProperty(String label, FieldType type, boolean multiple, boolean required, String stereotype,
+			String name) {
 		super();
 		this.label = label;
 		this.type = type;
 		this.multiple = multiple;
 		this.required = required;
 		this.stereotype = stereotype;
+		this.name = name;
 	}
+
 
 	public String getLabel() {
 		return label;
