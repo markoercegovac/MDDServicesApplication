@@ -1,4 +1,3 @@
-<html>
 <head>
 <meta charset="utf-8">
 <title>${fmForm.title}</title>
@@ -65,7 +64,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let ${class.name?lower_case} of collection>
+			<tr *ngFor="let ${class.name?lower_case} of collection">
 				<#list properties as property>
 					<#if property.name == "id">
 						<td>{{${class.name?lower_case}.${property.name}}}</td>
@@ -80,4 +79,3 @@
 		</tbody>
 	</table>
 </div>
-</html>

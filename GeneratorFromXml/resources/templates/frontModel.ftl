@@ -6,6 +6,8 @@ export class ${class.name} {
 			${property.name} : string;
 		<#elseif property.type == "double">
 			${property.name} : number;
+		<#elseif property.type == "Integer">
+			${property.name} : number;
 		</#if>
 	</#list>
 	
@@ -16,6 +18,8 @@ export class ${class.name} {
 			<#elseif property.type == "String">
 				${property.name} : string,
 			<#elseif property.type == "double">
+				${property.name} : number,
+			<#elseif property.type == "Integer">
 				${property.name} : number,
 			</#if>
 		</#list>
@@ -28,7 +32,10 @@ export class ${class.name} {
 				this.${property.name} = ${property.name};
 			<#elseif property.type == "double">
 				this.${property.name} = ${property.name};
+			<#elseif property.type == "Integer">
+				this.${property.name} = ${property.name};
 			</#if>
 		</#list>
 	}
+	
 }
