@@ -73,8 +73,8 @@ public abstract class BasicGenerator {
 
 	}
 
-	public Writer getWriter(String fileNamePart, String packageName) throws IOException {
-		if (packageName != filePackage) {
+	public Writer getWriter(String fileNamePart, String packageName,boolean isPackNameExist) throws IOException {
+		if (isPackNameExist) {
 			packageName.replace(".", File.separator);		
 			filePackage = packageName;
 		}
@@ -117,7 +117,7 @@ public abstract class BasicGenerator {
 	}
 
 	public Writer getWriter() throws IOException {
-		return getWriter("", filePackage);
+		return getWriter("", filePackage, true);
 
 	}
 

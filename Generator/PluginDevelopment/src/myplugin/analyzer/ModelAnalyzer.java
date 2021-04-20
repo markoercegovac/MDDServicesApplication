@@ -23,7 +23,6 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.*;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
-import com.sun.xml.internal.ws.server.sei.ValueGetter;
 
 
 /** Model Analyzer takes necessary metadata from the MagicDraw model and puts it in 
@@ -77,7 +76,10 @@ public class ModelAnalyzer {
 				if (ownedElement instanceof Class) {
 					Class cl = (Class)ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
-					FMModel.getInstance().getClasses().add(fmClass);
+					if(!fmClass.getName().equalsIgnoreCase("BusinessApp")) {
+						FMModel.getInstance().getClasses().add(fmClass);	
+					}
+					
 				}
 				
 				if (ownedElement instanceof Enumeration) {

@@ -2,6 +2,7 @@ package myplugin.generator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,24 +11,18 @@ import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMFieldProperty;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.options.GeneratorOptions;
 
-/**
- * EJB generator that now generates incomplete ejb classes based on MagicDraw
- * class model
- * 
- * @ToDo: enhance resources/templates/ejbclass.ftl template and intermediate
- *        data structure (@see myplugin.generator.fmmodel) in order to generate
- *        complete ejb classes
- */
+public class FrontModelGenerator extends BasicGenerator {
 
-public class EJBGenerator extends BasicGenerator {
-
-	public EJBGenerator(GeneratorOptions generatorOptions) {
+	public FrontModelGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
+		// TODO Auto-generated constructor stub
 	}
-
+	
 	public void generate() {
 
 		try {
@@ -41,6 +36,15 @@ public class EJBGenerator extends BasicGenerator {
 			FMClass cl = classes.get(i);
 			Writer out;
 			Map<String, Object> context = new HashMap<String, Object>();
+			
+			List<FMFieldProperty> fields = new ArrayList<FMFieldProperty>();
+			for(FMProperty prop:cl.getProperties() ) {
+				if(prop.getFieldProperty()!=null) {
+					fields.add(prop.getFieldProperty());	
+				}
+				
+			}
+			
 			try {
 				out = getWriter(cl.getName(), cl.getTypePackage(), false);
 				if (out != null) {
@@ -48,6 +52,8 @@ public class EJBGenerator extends BasicGenerator {
 					context.put("class", cl);
 					context.put("properties", cl.getProperties());
 					context.put("importedPackages", cl.getImportedPackages());
+					context.put("fmForm", cl.getFmFormClass());
+					context.put("fields" , fields);
 					getTemplate().process(context, out);
 					out.flush();
 				}
@@ -58,4 +64,5 @@ public class EJBGenerator extends BasicGenerator {
 			}
 		}
 	}
+
 }
