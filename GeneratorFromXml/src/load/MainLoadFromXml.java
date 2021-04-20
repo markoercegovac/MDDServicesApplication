@@ -23,6 +23,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.FrontGenerator;
 import myplugin.generator.FrontModelGenerator;
+import myplugin.generator.RoutingModuleGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
@@ -58,6 +59,12 @@ public class MainLoadFromXml{
 			angularTsComponents();
 			angularTsModel();
 			angularTsService();
+			routingModule();
+			appHtmlComponent();
+			appModule();
+			navigationCss();
+			navigationHtml();
+			navigationTs();
 		}
 	   
 	}
@@ -114,4 +121,54 @@ public class MainLoadFromXml{
         FrontModelGenerator ejbGenerator = new FrontModelGenerator(generatorOptions);
         ejbGenerator.generate();
 	}
+	
+	public static void routingModule() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "routingModule", TEMP_DIR, "{0}"+".module.ts", true, "FrontEnd.src.app");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("app-routing");
+	}
+	
+	public static void appHtmlComponent() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "appHtmlComponent", TEMP_DIR, "{0}"+".component.html", true, "FrontEnd.src.app");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("app");
+	}
+	
+	public static void appModule() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "appModuleTs", TEMP_DIR, "{0}"+".module.ts", true, "FrontEnd.src.app");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("app");
+	}
+	
+	public static void navigationTs() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "navigationTs", TEMP_DIR, "{0}"+".component.ts", true, "FrontEnd.src.app.navigation");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("navigation");
+	}
+	
+	public static void navigationHtml() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "navigationHtml", TEMP_DIR, "{0}"+".component.html", true, "FrontEnd.src.app.navigation");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("navigation");
+	}
+	
+	public static void navigationCss() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "navigationCss", TEMP_DIR, "{0}"+".component.css", true, "FrontEnd.src.app.navigation");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator moduleGenerator = new RoutingModuleGenerator(generatorOptions);
+		moduleGenerator.generate("navigation");
+	}
+	
+	
 }
