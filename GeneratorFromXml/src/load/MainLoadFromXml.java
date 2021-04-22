@@ -68,6 +68,8 @@ public class MainLoadFromXml{
 			dtoOptions();
 			appProperties();
 			pomXml();
+			springMain();
+			repositoryOptions();
 		}
 	   
 	}
@@ -88,6 +90,14 @@ public class MainLoadFromXml{
         ejbGenerator.generate();
 	}
 	
+	public static void repositoryOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "repository", TEMP_DIR,"{0}Repository.java",true,"mbrs.src.main.java.generator.mbrs.repository");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
+	
 	public static void appProperties() {
 		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "appProperties", TEMP_DIR,"{0}.properties",true,"mbrs.src.main.resources");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
@@ -102,6 +112,14 @@ public class MainLoadFromXml{
 		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
 		RoutingModuleGenerator ejbGenerator = new RoutingModuleGenerator(generatorOptions);
         ejbGenerator.generate("pom");
+	}
+	
+	public static void springMain() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "springMain", TEMP_DIR,"{0}.java",true,"mbrs.src.main.java.generator.mbrs");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RoutingModuleGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+		RoutingModuleGenerator ejbGenerator = new RoutingModuleGenerator(generatorOptions);
+        ejbGenerator.generate("MbrsApplication");
 	}
 	
 	public static void angularHtmlComponents() {
