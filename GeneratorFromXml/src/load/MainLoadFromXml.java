@@ -70,6 +70,8 @@ public class MainLoadFromXml{
 			pomXml();
 			springMain();
 			repositoryOptions();
+			service();
+			serviceImpl();
 		}
 	   
 	}
@@ -92,6 +94,22 @@ public class MainLoadFromXml{
 	
 	public static void repositoryOptions() {
 		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "repository", TEMP_DIR,"{0}Repository.java",true,"mbrs.src.main.java.generator.mbrs.repository");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
+	
+	public static void service() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "service", TEMP_DIR,"{0}Service.java",true,"mbrs.src.main.java.generator.mbrs.service");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
+	
+	public static void serviceImpl() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "serviceImpl", TEMP_DIR,"{0}ServiceImpl.java",true,"mbrs.src.main.java.generator.mbrs.service.impl");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
 		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
         EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
