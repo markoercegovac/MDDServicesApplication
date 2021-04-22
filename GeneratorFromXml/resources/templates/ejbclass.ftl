@@ -1,17 +1,37 @@
 package ${class.typePackage};
 
-@EntityBlaBla
+import javax.persistence.*;
+import java.util.*;
+
+@Entity
 @Table(name = "${class.name}")
 ${class.visibility} class ${class.name} {  
 <#list properties as property>
 	<#if property.upper == 1 >
+	<#if property.joinType??>
+      @ManyToOne<#if property.fetchType??>(fetch = ${property.fetchType})</#if>
+      @JoinColumn(name = "${property.name}", referencedColumnName = "id")	
+	<#else>
+      @Column(name="${property.columnName}")
+	</#if>
       ${property.visibility} ${property.type} ${property.name};
+      
     <#elseif property.upper == -1 > 
+      @JsonIgnore
+      <#if property.cascadeType?? >
+      @OneToMany(mappedBy = "${class.name?lower_case}", fetch = ${property.fetchType}, cascade = ${property.cascadeType})
+      <#else>
+      @OneToMany(mappedBy = "${class.name?lower_case}", fetch = ${property.fetchType})
+      </#if>
       ${property.visibility} Set<${property.type}> ${property.name} = new HashSet<${property.type}>();
-    <#else>   
+    
+    <#else>  
+    
     	<#list 1..property.upper as i>
+      
       ${property.visibility} ${property.type} ${property.name}${i};
 		</#list>  
+    
     </#if>     
 </#list>
 

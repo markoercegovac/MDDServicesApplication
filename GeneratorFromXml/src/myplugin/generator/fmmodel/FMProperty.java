@@ -13,6 +13,18 @@ public class FMProperty {
 	
 	private String name;
 	private String classPackage;
+	
+	private String columnName;
+	private Integer length;
+	private Integer precision;
+	private Strategy strategy;
+	
+	private String propertyType;
+	private String joinTable;
+	private String joinType;
+	private CascadeType cascadeType;
+	private FetchType fetchType;
+	
 	public String getName() {
 		return name;
 	}
@@ -110,8 +122,59 @@ public class FMProperty {
 	public void setReferencedProperty(FMReferencedProperty referencedProperty) {
 		this.referencedProperty = referencedProperty;
 	}
-	
-	
-	
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public Integer getLength() {
+		return length;
+	}
+	public void setLength(Integer length) {
+		this.length = length;
+	}
+	public Integer getPrecision() {
+		return precision;
+	}
+	public void setPrecision(Integer precision) {
+		this.precision = precision;
+	}
+	public Strategy getStrategy() {
+		return strategy;
+	}
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+	public String getPropertyType() {
+		return propertyType;
+	}
+	public void setPropertyType(String propertyType) {
+		this.propertyType = propertyType;
+	}
+	public String getJoinTable() {
+		return joinTable;
+	}
+	public void setJoinTable(String joinTable) {
+		this.joinTable = joinTable;
+	}
+	public String getJoinType() {
+		return joinType;
+	}
+	public void setJoinType(String joinType) {
+		this.joinType = joinType;
+	}
+	public CascadeType getCascadeType() {
+		return cascadeType;
+	}
+	public void setCascadeType(CascadeType cascadeType) {
+		this.cascadeType = cascadeType;
+	}
+	public FetchType getFetchType() {
+		return fetchType;
+	}
+	public void setFetchType(FetchType fetchType) {
+		this.fetchType = fetchType;
+	}
 	
 }
