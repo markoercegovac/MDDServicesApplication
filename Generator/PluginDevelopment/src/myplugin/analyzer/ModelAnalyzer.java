@@ -248,10 +248,21 @@ public class ModelAnalyzer {
 					}
 				}
 			}
-			if(referenced != null) {
-				fetch = referenced.getOwnedAttribute().get(0).getName();	
-			}
 			
+			
+		}
+		if(referenced!=null) {
+			List<Property> tags = referenced.getOwnedAttribute();
+			for(Property property : tags) {
+				String tagName = property.getName();
+				List<?> value = StereotypesHelper.getStereotypePropertyValue(p, referenced, tagName);
+				if(value.size()>0) {
+					switch (tagName) {
+						case "fetch":
+							fetch = ((EnumerationLiteral)value.get(0)).getName();
+					}
+				}
+			}
 		}
 		
 		if(fetch != null) {
