@@ -62,13 +62,15 @@
           </fieldProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
-          <name>apointment</name>
+          <name>appointment</name>
           <type>Appointment</type>
           <visibility>private</visibility>
           <lower>1</lower>
           <upper>1</upper>
           <referencedProperty>
-            <joinType>ManyToOne</joinType>
+            <joinType>OneToMany</joinType>
+            <cascadeType>ALL</cascadeType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
       </FMProperties>
@@ -227,7 +229,9 @@
           <lower>0</lower>
           <upper>-1</upper>
           <referencedProperty>
-            <joinType>OneToMany</joinType>
+            <columnName>RecensionAppointment</columnName>
+            <joinType>ManyToOne</joinType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
@@ -237,17 +241,21 @@
           <lower>0</lower>
           <upper>-1</upper>
           <referencedProperty>
-            <joinType>OneToMany</joinType>
+            <columnName>TypeAppointment</columnName>
+            <joinType>ManyToOne</joinType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
-          <name>service</name>
+          <name>customerservice</name>
           <type>CustomerService</type>
           <visibility>private</visibility>
           <lower>1</lower>
           <upper>1</upper>
           <referencedProperty>
-            <joinType>ManyToOne</joinType>
+            <joinType>OneToMany</joinType>
+            <cascadeType>ALL</cascadeType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
       </FMProperties>
@@ -350,7 +358,9 @@
           <lower>0</lower>
           <upper>-1</upper>
           <referencedProperty>
-            <joinType>OneToMany</joinType>
+            <columnName>ServicesCategory</columnName>
+            <joinType>ManyToOne</joinType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
       </FMProperties>
@@ -428,13 +438,15 @@
           </fieldProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
-          <name>apointment</name>
+          <name>appointment</name>
           <type>Appointment</type>
           <visibility>private</visibility>
           <lower>1</lower>
           <upper>1</upper>
           <referencedProperty>
-            <joinType>ManyToOne</joinType>
+            <joinType>OneToMany</joinType>
+            <cascadeType>ALL</cascadeType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
       </FMProperties>
@@ -622,13 +634,15 @@
           </fieldProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
-          <name>apointments</name>
+          <name>appointments</name>
           <type>Appointment</type>
           <visibility>private</visibility>
           <lower>0</lower>
           <upper>-1</upper>
           <referencedProperty>
-            <joinType>OneToMany</joinType>
+            <columnName>AppointmentServices</columnName>
+            <joinType>ManyToOne</joinType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
         <myplugin.generator.fmmodel.FMProperty>
@@ -638,7 +652,9 @@
           <lower>1</lower>
           <upper>1</upper>
           <referencedProperty>
-            <joinType>ManyToOne</joinType>
+            <joinType>OneToMany</joinType>
+            <cascadeType>ALL</cascadeType>
+            <fetchType>LAZY</fetchType>
           </referencedProperty>
         </myplugin.generator.fmmodel.FMProperty>
       </FMProperties>
