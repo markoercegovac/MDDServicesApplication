@@ -51,7 +51,7 @@ public class MainLoadFromXml{
 			XStream xstream = new XStream(new DomDriver());
 			FMModel model= (FMModel) xstream.fromXML(in);
 			FMModel.getInstance().getClasses().addAll(model.getClasses());
-			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
+//			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
 			
 			ejbOptions();
 			angularHtmlComponents();
