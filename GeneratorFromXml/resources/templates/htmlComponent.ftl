@@ -16,32 +16,32 @@
 				<div>
 					<br>
 					<label>${field.label}</label>
-					<input type="text" class="form-control" [(ngModel)]='model.${field.name}'>
+					<input type="text" class="form-control" [(ngModel)]='model.${field.name}' name ='${field.name}'>
 				</div>
 				<#elseif field.type == "DATE">
 				<div>
 					<br>
 					<label>${field.label}</label>
-					<input type="date" class="form-control" [(ngModel)]='model.${field.name}'>
+					<input type="date" class="form-control" [(ngModel)]='model.${field.name}' name ='${field.name}'>
 				</div>
 				<#elseif field.type == "SELECT">
 				<div>
 					<br>
 					<label>${field.label}</label>
-					<select class="form-control" [(ngModel)]='model.${field.name}'>
+					<select class="form-control" [(ngModel)]='model.${field.name}' name ='${field.name}'>
 					</select>
 				</div>
 				<#elseif field.type == "TEXTAREA">
 				<div>
 					<br>
 					<label>${field.label}</label>
-					<textarea [(ngModel)]='model.${field.name}' class="form-control"></textarea>
+					<textarea [(ngModel)]='model.${field.name}' name ='${field.name}' class="form-control"></textarea>
 				</div>
 				<#elseif field.type == "TIME">
 				<div>
 					<br>
 					<label>${field.label}</label>
-					<input type="time" class="form-control" [(ngModel)]='model.${field.name}'>
+					<input type="time" class="form-control" [(ngModel)]='model.${field.name}' name ='${field.name}'>
 				</div>
 				</#if>
 					
@@ -74,8 +74,13 @@
 						<td>{{${class.name?lower_case}.${property.name}}}</td>
 					</#if>
 				</#list>
-				<td><button class="btn btn-danger" value="Delete" (click)="delete(${class.name?lower_case})"></button></td>
+				<td><button class="btn btn-danger" value="Delete" (click)="delete(${class.name?lower_case})">Delete</button></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
+
+	<br>
+	<br>
+	
+<footer>&copy; Copyright 2021 MBRS Team 13 (Marko Ercegovac, Dijana Radic, Maja Kesin, Vanja Jeftic)</footer>

@@ -17,7 +17,7 @@ export class ${class.name}Service {
 	}
 
 	public getAll(): Observable<${class.name}[]>{
-		return this.http.get<${class.name}[]>(this.URL + 's');
+		return this.http.get<${class.name}[]>(this.URL);
 	}
 	
 	public save(${class.name?lower_case}:${class.name}){

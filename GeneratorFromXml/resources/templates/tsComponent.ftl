@@ -9,7 +9,21 @@ import { ${class.name}Service } from 'src/app/service/${class.name}.service';
 })
 
 export class ${class.name}Component implements OnInit {
-	model! : ${class.name}
+	model : ${class.name} = {
+		<#list properties as property>
+		<#if property.upper == 1>
+		<#if property.joinType??>
+		
+		<#else> 
+			<#if property.type = 'String'>
+			${property.name} : "",
+			<#else>
+			${property.name} : 0,
+			</#if>
+		</#if>
+		</#if>
+		</#list>
+	}
 	collection : ${class.name}[] = [];
 
 
@@ -30,6 +44,7 @@ export class ${class.name}Component implements OnInit {
 		this.${class.name?lower_case}Service.save(this.model).subscribe(
 			data => {
 				window.alert("Successfully Added");
+				this.ngOnInit();
 			},
 			error => {
 				//window.alert("Error");
@@ -38,13 +53,16 @@ export class ${class.name}Component implements OnInit {
 	}
 	
 	delete(object:${class.name}) :void {
-		this.${class.name?lower_case}Service.delete(object.id).subscribe(
-			data => {
-				window.alert("Successfully Deleted");
-			},
-			error => {
-				//window.alert("Error");
-			}
-		);
+		if(window.confirm('Are sure you want to delete this item ?')){
+			this.${class.name?lower_case}Service.delete(object.id).subscribe(
+				data => {
+					window.alert("Successfully Deleted");
+					this.ngOnInit();
+				},
+				error => {
+					//window.alert("Error");
+				}
+			);
+		}
 	}
  }

@@ -72,6 +72,7 @@ public class MainLoadFromXml{
 			repositoryOptions();
 			service();
 			serviceImpl();
+			controllerOptions();
 		}
 	   
 	}
@@ -86,6 +87,14 @@ public class MainLoadFromXml{
 	
 	public static void dtoOptions() {
 		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "dtoModel", TEMP_DIR,"{0}Dto.java",true,"mbrs.src.main.java.generator.mbrs.dto");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
+		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
+        EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
+        ejbGenerator.generate();
+	}
+	
+	public static void controllerOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions(DIR, "controller", TEMP_DIR,"{0}Controller.java",true,"mbrs.src.main.java.generator.mbrs.controller");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator" ,generatorOptions);
 		generatorOptions.setTemplateDir(PROJECT_PATH + File.separator +"resources" +File.separator+ "templates");
         EJBGenerator ejbGenerator = new EJBGenerator(generatorOptions);
