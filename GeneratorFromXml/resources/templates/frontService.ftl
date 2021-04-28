@@ -27,4 +27,8 @@ export class ${class.name}Service {
 	public delete(id : number){
 		return this.http.delete(this.URL + '/' + id);
 	}
+	
+	public edit(id : number): Observable<${class.name}>{
+		return this.http.get<${class.name}>(this.URL + '/edit/'+ id);
+	}
 }

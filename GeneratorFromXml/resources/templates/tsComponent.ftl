@@ -25,6 +25,7 @@ export class ${class.name}Component implements OnInit {
 		</#list>
 	}
 	collection : ${class.name}[] = [];
+	isEdit : boolean = false;
 
 
 	constructor(private ${class.name?lower_case}Service:${class.name}Service){}
@@ -37,7 +38,7 @@ export class ${class.name}Component implements OnInit {
 			error => {
 	       		//window.alert("Error");
 	      	}
-	   	);
+	   	);	
 	}
 	
 	submit(): void {
@@ -64,5 +65,18 @@ export class ${class.name}Component implements OnInit {
 				}
 			);
 		}
+	}
+	
+	edit(object:${class.name}) :void {
+		
+		this.${class.name?lower_case}Service.edit(object.id).subscribe(
+			data => {
+					this.model=data;
+				},
+				error => {
+					//window.alert("Error");
+				}
+			);
+		
 	}
  }

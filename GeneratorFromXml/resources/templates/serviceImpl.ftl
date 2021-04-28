@@ -53,6 +53,13 @@ public class ${class.name}ServiceImpl implements ${class.name}Service {
 		return dtoList;
 	}
 	
+	@Override
+	public ${class.name}Dto edit(Long id){
+		${class.name} entity = ${class.name?lower_case}Repository.getOne(id);
+		${class.name}Dto dto = mapTo(entity);
+		return dto;
+	}
+	
 	private ${class.name}Dto mapTo(${class.name} entity){
 		${class.name}Dto dto = new ${class.name}Dto();
 		<#list properties as property>

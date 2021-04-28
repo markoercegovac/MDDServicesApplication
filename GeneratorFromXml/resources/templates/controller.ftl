@@ -29,4 +29,9 @@ public class ${class.name}Controller {
 	public void delete(@PathVariable("id") Long id){
 		${class.name?lower_case}Service.delete(id);
 	}
+	
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<${class.name}Dto> edit(@PathVariable("id") Long id){
+		return new ResponseEntity<>(${class.name?lower_case}Service.edit(id), HttpStatus.OK);
+	}
 }

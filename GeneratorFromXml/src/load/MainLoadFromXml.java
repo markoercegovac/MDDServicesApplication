@@ -34,7 +34,7 @@ import myplugin.generator.options.ProjectOptions;
 
 public class MainLoadFromXml{
 	
-	private static String DIR = "c:/fax/temp";
+	private static String DIR = "c:/temp";
 
 	private static final String TEMP_DIR = "templates";
 	private static final String PROJECT_PATH = new File("").getAbsolutePath();

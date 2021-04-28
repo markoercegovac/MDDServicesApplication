@@ -8,7 +8,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -18,6 +18,9 @@
       </li>
 </#list>
     </ul>
+	<span class="navbar-text">
+	&copy; Copyright 2021 MBRS Team 13
+	</span>
   </div>
 </nav>
 

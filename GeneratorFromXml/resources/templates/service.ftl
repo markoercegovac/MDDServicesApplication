@@ -8,5 +8,6 @@ import java.util.List;
 public interface ${class.name}Service {
 	void save(${class.name}Dto dto);
 	void delete(Long id);
+	${class.name}Dto edit(Long id);
 	List<${class.name}Dto> getAll();
 }

@@ -3,6 +3,7 @@
 <title>${fmForm.title}</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
 </head>
+<br>
 <body>
 <div class="control-group">
 	<form (ngSubmit)="submit()" >
@@ -29,6 +30,18 @@
 					<br>
 					<label>${field.label}</label>
 					<select class="form-control" [(ngModel)]='model.${field.name}' name ='${field.name}'>
+					<#if class.name == "Category">
+						<option>Salter</option>
+						<option>Stolica</option>
+						<option>Red</option>
+						<option>Pult</option>
+					<#elseif class.name == "Recension">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</#if>
 					</select>
 				</div>
 				<#elseif field.type == "TEXTAREA">
@@ -61,6 +74,7 @@
 					<th scope="col">${field.label}</th>
 				</#list>
 				<th scope="col">Delete</th>
+				<th scope="col">Edit</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -75,6 +89,7 @@
 					</#if>
 				</#list>
 				<td><button class="btn btn-danger" value="Delete" (click)="delete(${class.name?lower_case})">Delete</button></td>
+				<td><button class="btn btn-info" value="Edit" (click)="edit(${class.name?lower_case})">Edit</button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -83,4 +98,4 @@
 	<br>
 	<br>
 	
-<footer>&copy; Copyright 2021 MBRS Team 13 (Marko Ercegovac, Dijana Radic, Maja Kesin, Vanja Jeftic)</footer>
+
