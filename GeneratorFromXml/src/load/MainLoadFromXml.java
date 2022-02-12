@@ -20,6 +20,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
+import enumsP2P.Utils;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.FrontGenerator;
 import myplugin.generator.FrontModelGenerator;
@@ -52,7 +53,7 @@ public class MainLoadFromXml{
 			FMModel model= (FMModel) xstream.fromXML(in);
 			FMModel.getInstance().getClasses().addAll(model.getClasses());
 //			DIR = "/home/dijana/temp"; //ko koristi windows zakomentarise
-			
+			Utils u = new Utils();
 			ejbOptions();
 			angularHtmlComponents();
 			angularCssComponents();
